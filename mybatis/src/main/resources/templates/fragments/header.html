@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<div id="header" th:fragment="headerFragments">
+		상단메뉴 <br>
+		header.html<br>
+		<a th:href="@{/addMember}">01.회원가입</a>
+		<a th:if="${session.SLEVEL =='관리자'}" th:href="@{/memberList}">02.회원목록조회</a>
+		<a th:if="${session.SLEVEL =='관리자' || session.SLEVEL =='판매자'}" 
+		   th:href="@{/addGoods}">03.상품등록</a>
+		<a th:if="${session.SLEVEL =='관리자' || session.SLEVEL =='판매자'}" 
+		   th:href="@{/goodsList}">04.상품목록조회</a>
+		<a th:if="${session.SLEVEL =='판매자'}" 
+		   th:href="@{/goodsList(searchKey = goodsSellerId,searchValue = ${session.SID})}">05.내 상품목록 조회</a><br>
+		<a th:if="${session.SLEVEL =='관리자'}" 
+		   th:href="@{/loginHistory}">05.로그인이력조회</a>   
+		<div style="text-align: right">
+			<a th:if="${session.SID eq null}" th:href="@{/login}">로그인</a>
+			<a th:unless="${session.SID eq null}" th:href="@{/logout}">로그아웃</a>
+		</div>
+		<th:block th:if="${session.SID != null}">
+			아이디 : [[${session.SID}]],  권한 : [[${session.SLEVEL}]],  이름 : [[${session.SNAME}]]
+		</th:block>
+	</div>
+</html>
